@@ -1,0 +1,2337 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="FREE FIRE HUB — фанатский сайт о Free Fire: персонажи, оружие, режимы, советы и настройки.">
+  <meta property="og:title" content="FREE FIRE HUB">
+  <meta property="og:description" content="Выживай. Сражайся. Побеждай.">
+  <meta property="og:type" content="website">
+  <title>FREE FIRE HUB — Fan Gaming Portal</title>
+
+  <style>
+    :root {
+      --bg: #070708;
+      --bg2: #101013;
+      --card: rgba(22, 22, 27, .78);
+      --text: #fff;
+      --muted: #a8a8b0;
+      --red: #ff2638;
+      --orange: #ff7214;
+      --gold: #ffb52e;
+      --border: rgba(255,255,255,.1);
+      --shadow: 0 20px 60px rgba(0,0,0,.45);
+      --radius: 22px;
+    }
+
+    body.light {
+      --bg: #f3f3f5;
+      --bg2: #fff;
+      --card: rgba(255,255,255,.85);
+      --text: #101014;
+      --muted: #62626b;
+      --border: rgba(0,0,0,.1);
+      --shadow: 0 20px 50px rgba(0,0,0,.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 80px;
+    }
+
+    body {
+      font-family: Inter, Arial, sans-serif;
+      background:
+        radial-gradient(circle at 15% 10%, rgba(255,38,56,.1), transparent 30%),
+        radial-gradient(circle at 85% 30%, rgba(255,114,20,.08), transparent 30%),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      transition: .3s;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+      border: 0;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .container {
+      width: min(1180px, 92%);
+      margin: auto;
+    }
+
+    /* Progress */
+    #progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      width: 0;
+      background: linear-gradient(90deg, var(--red), var(--orange), var(--gold));
+      z-index: 9999;
+    }
+
+    /* Header */
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      background: rgba(7,7,8,.72);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    body.light header {
+      background: rgba(255,255,255,.78);
+    }
+
+    .nav {
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 1.25rem;
+      font-weight: 950;
+      letter-spacing: 1px;
+      white-space: nowrap;
+    }
+
+    .logo span {
+      color: var(--red);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 22px;
+      align-items: center;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      font-size: .9rem;
+      font-weight: 700;
+      transition: .25s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--red);
+    }
+
+    .nav-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .icon-btn,
+    .menu-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      color: var(--text);
+      background: var(--card);
+      border: 1px solid var(--border);
+    }
+
+    .menu-btn {
+      display: none;
+      font-size: 1.3rem;
+    }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(90deg, rgba(0,0,0,.88), rgba(0,0,0,.48), rgba(0,0,0,.2)),
+        url("https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=2000&q=90")
+        center/cover;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 70% 50%, rgba(255,72,30,.3), transparent 30%),
+        linear-gradient(0deg, var(--bg), transparent 25%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      padding-top: 80px;
+      max-width: 750px;
+      animation: heroIn 1s ease both;
+    }
+
+    .badge {
+      display: inline-flex;
+      padding: 8px 14px;
+      border: 1px solid rgba(255,70,60,.4);
+      border-radius: 100px;
+      background: rgba(255,38,56,.1);
+      color: #ff858e;
+      font-weight: 800;
+      font-size: .8rem;
+      margin-bottom: 22px;
+    }
+
+    .hero h1 {
+      font-size: clamp(4rem, 11vw, 8.8rem);
+      line-height: .82;
+      letter-spacing: -7px;
+      font-weight: 1000;
+      text-transform: uppercase;
+    }
+
+    .hero h1 span {
+      color: var(--red);
+      text-shadow: 0 0 35px rgba(255,38,56,.5);
+    }
+
+    .hero p {
+      margin: 30px 0;
+      color: #ddd;
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      max-width: 580px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 14px 22px;
+      border-radius: 12px;
+      font-weight: 900;
+      transition: .25s;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      color: white;
+      background: linear-gradient(135deg, var(--red), var(--orange));
+      box-shadow: 0 10px 35px rgba(255,38,56,.25);
+    }
+
+    .btn-secondary {
+      color: var(--text);
+      background: rgba(255,255,255,.08);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+    }
+
+    .stats {
+      position: absolute;
+      bottom: 35px;
+      right: 4%;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      width: min(650px, 90%);
+      padding: 18px;
+      border-radius: 20px;
+      background: rgba(10,10,12,.65);
+      backdrop-filter: blur(18px);
+      border: 1px solid rgba(255,255,255,.12);
+    }
+
+    .stat {
+      text-align: center;
+      padding: 6px;
+      border-right: 1px solid var(--border);
+    }
+
+    .stat:last-child {
+      border: 0;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1.4rem;
+      color: white;
+    }
+
+    .stat span {
+      color: #aaa;
+      font-size: .7rem;
+    }
+
+    /* Sections */
+    section {
+      padding: 100px 0;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 35px;
+    }
+
+    .eyebrow {
+      color: var(--red);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-weight: 900;
+      font-size: .75rem;
+      margin-bottom: 8px;
+    }
+
+    h2 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      line-height: 1;
+    }
+
+    .section-desc {
+      max-width: 560px;
+      color: var(--muted);
+    }
+
+    /* Search */
+    .search-box {
+      display: none;
+      position: fixed;
+      top: 82px;
+      right: 4%;
+      width: min(450px, 90%);
+      padding: 15px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      z-index: 999;
+    }
+
+    .search-box.open {
+      display: block;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 13px;
+      color: var(--text);
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      outline: none;
+    }
+
+    .search-results {
+      max-height: 300px;
+      overflow: auto;
+      margin-top: 10px;
+    }
+
+    .search-results div {
+      padding: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* Filters */
+    .filters {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .filter {
+      padding: 10px 16px;
+      border-radius: 100px;
+      color: var(--muted);
+      background: var(--card);
+      border: 1px solid var(--border);
+    }
+
+    .filter.active,
+    .filter:hover {
+      color: white;
+      background: var(--red);
+      border-color: var(--red);
+    }
+
+    /* Cards */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+      transition: .35s;
+    }
+
+    .card:hover {
+      transform: translateY(-7px);
+      border-color: rgba(255,38,56,.45);
+    }
+
+    .card-img {
+      height: 230px;
+      background: #18181c;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: .5s;
+    }
+
+    .card:hover .card-img img {
+      transform: scale(1.07);
+    }
+
+    .card-body {
+      padding: 20px;
+    }
+
+    .card h3 {
+      margin-bottom: 7px;
+      font-size: 1.2rem;
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: .9rem;
+      margin-bottom: 15px;
+    }
+
+    .meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      color: #999;
+      font-size: .75rem;
+      margin-bottom: 15px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* Experience */
+    .experience-card {
+      padding: 25px;
+      min-height: 210px;
+    }
+
+    .experience-icon {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+
+    /* Weapon */
+    .weapon-card {
+      padding: 22px;
+    }
+
+    .weapon-icon {
+      height: 130px;
+      display: grid;
+      place-items: center;
+      font-size: 4rem;
+      background: linear-gradient(135deg, rgba(255,38,56,.13), rgba(255,114,20,.04));
+    }
+
+    .weapon-stats {
+      margin-top: 15px;
+    }
+
+    .bar {
+      margin: 8px 0;
+    }
+
+    .bar-top {
+      display: flex;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: .72rem;
+    }
+
+    .bar-line {
+      height: 5px;
+      background: #29292e;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .bar-line i {
+      display: block;
+      height: 100%;
+      background: linear-gradient(90deg, var(--red), var(--orange));
+      border-radius: inherit;
+    }
+
+    /* Itineraries */
+    .route {
+      color: var(--red);
+      font-weight: 800;
+      font-size: .85rem;
+      margin: 12px 0;
+    }
+
+    /* Planner */
+    .planner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      padding: 35px;
+      background:
+        linear-gradient(135deg, rgba(255,38,56,.12), rgba(255,114,20,.03)),
+        var(--card);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 7px;
+      font-size: .85rem;
+      font-weight: 800;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 13px 14px;
+      color: var(--text);
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      outline: none;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--red);
+    }
+
+    .recommendation {
+      min-height: 100%;
+      padding: 25px;
+      border-radius: 18px;
+      background: rgba(0,0,0,.2);
+      border: 1px solid var(--border);
+    }
+
+    .recommendation h3 {
+      color: var(--orange);
+      margin-bottom: 10px;
+    }
+
+    .recommendation ul {
+      padding-left: 20px;
+      color: var(--muted);
+    }
+
+    /* Map */
+    .map {
+      min-height: 560px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 30px;
+      border: 1px solid var(--border);
+      background:
+        radial-gradient(circle at 30% 30%, rgba(48,128,100,.5), transparent 20%),
+        radial-gradient(circle at 70% 65%, rgba(60,130,180,.35), transparent 25%),
+        linear-gradient(145deg, #102d2a, #0b1719 60%, #15222b);
+    }
+
+    .map-shape {
+      position: absolute;
+      width: 65%;
+      height: 70%;
+      left: 17%;
+      top: 15%;
+      background: linear-gradient(135deg, #274f45, #18382f);
+      clip-path: polygon(5% 25%, 18% 12%, 40% 18%, 54% 5%, 76% 16%, 94% 30%, 82% 47%, 96% 64%, 77% 79%, 56% 92%, 40% 76%, 21% 84%, 9% 65%, 17% 48%, 1% 42%);
+      opacity: .9;
+      filter: drop-shadow(0 20px 20px rgba(0,0,0,.3));
+    }
+
+    .marker {
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      background: var(--red);
+      border: 3px solid white;
+      border-radius: 50%;
+      box-shadow: 0 0 20px var(--red);
+      z-index: 2;
+      transition: .2s;
+    }
+
+    .marker:hover {
+      transform: scale(1.5);
+    }
+
+    .marker::after {
+      content: attr(data-name);
+      position: absolute;
+      left: 20px;
+      top: -6px;
+      white-space: nowrap;
+      font-size: .75rem;
+      font-weight: 800;
+      color: white;
+    }
+
+    .m1 { left: 45%; top: 33%; }
+    .m2 { left: 31%; top: 43%; }
+    .m3 { left: 60%; top: 50%; }
+    .m4 { left: 50%; top: 59%; }
+    .m5 { left: 25%; top: 67%; }
+    .m6 { left: 67%; top: 32%; }
+    .m7 { left: 73%; top: 62%; }
+    .m8 { left: 59%; top: 72%; }
+
+    .map-info {
+      position: absolute;
+      left: 25px;
+      bottom: 25px;
+      max-width: 320px;
+      padding: 20px;
+      border-radius: 18px;
+      background: rgba(0,0,0,.65);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,.12);
+    }
+
+    /* About */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 25px;
+      align-items: stretch;
+    }
+
+    .about-main {
+      min-height: 450px;
+      padding: 35px;
+      border-radius: 28px;
+      background:
+        linear-gradient(0deg, rgba(0,0,0,.8), rgba(0,0,0,.15)),
+        url("https://images.unsplash.com/photo-1530789253388-582c481c54b0?auto=format&fit=crop&w=1400&q=85")
+        center/cover;
+      display: flex;
+      flex-direction: column;
+      justify-content: end;
+    }
+
+    .about-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .about-item {
+      padding: 25px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+    }
+
+    .about-item span {
+      font-size: 1.8rem;
+    }
+
+    /* Food */
+    .food-card {
+      padding: 22px;
+      text-align: center;
+    }
+
+    .food-icon {
+      font-size: 3rem;
+      margin-bottom: 10px;
+    }
+
+    /* Travel info */
+    .info-card {
+      padding: 25px;
+    }
+
+    .info-icon {
+      font-size: 2rem;
+      margin-bottom: 15px;
+    }
+
+    /* Gallery */
+    .gallery {
+      columns: 4 220px;
+      column-gap: 14px;
+    }
+
+    .gallery-item {
+      break-inside: avoid;
+      margin-bottom: 14px;
+      border-radius: 18px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      transition: .4s;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.05);
+      filter: brightness(.7);
+    }
+
+    .gallery-item span {
+      position: absolute;
+      left: 15px;
+      bottom: 12px;
+      font-weight: 900;
+      text-shadow: 0 2px 8px #000;
+    }
+
+    /* Testimonials */
+    .review {
+      padding: 28px;
+    }
+
+    .stars {
+      color: var(--gold);
+      letter-spacing: 3px;
+      margin-bottom: 15px;
+    }
+
+    .review p {
+      min-height: 100px;
+    }
+
+    .reviewer {
+      color: var(--muted);
+      font-size: .85rem;
+    }
+
+    /* FAQ */
+    .faq {
+      max-width: 850px;
+      margin: auto;
+    }
+
+    .faq-item {
+      margin-bottom: 10px;
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      overflow: hidden;
+      background: var(--card);
+    }
+
+    .faq-question {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      text-align: left;
+      color: var(--text);
+      background: transparent;
+      padding: 19px;
+      font-weight: 800;
+    }
+
+    .faq-answer {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: .3s;
+    }
+
+    .faq-answer > div {
+      overflow: hidden;
+    }
+
+    .faq-item.open .faq-answer {
+      grid-template-rows: 1fr;
+    }
+
+    .faq-answer p {
+      padding: 0 19px 19px;
+      color: var(--muted);
+    }
+
+    /* Contact */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: .8fr 1.2fr;
+      gap: 30px;
+    }
+
+    .contact-info {
+      padding: 30px;
+      border-radius: 25px;
+      background: linear-gradient(135deg, rgba(255,38,56,.14), rgba(255,114,20,.04));
+      border: 1px solid var(--border);
+    }
+
+    .contact-form {
+      padding: 30px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 25px;
+    }
+
+    textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+
+    .success {
+      display: none;
+      padding: 13px;
+      margin-top: 12px;
+      border-radius: 12px;
+      background: rgba(38,190,105,.12);
+      border: 1px solid rgba(38,190,105,.3);
+      color: #65dc9a;
+    }
+
+    /* Footer */
+    footer {
+      padding: 50px 0;
+      border-top: 1px solid var(--border);
+      background: var(--bg2);
+    }
+
+    .footer-grid {
+      display: flex;
+      justify-content: space-between;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      color: var(--muted);
+    }
+
+    .disclaimer {
+      width: 100%;
+      color: #777;
+      font-size: .75rem;
+      margin-top: 25px;
+    }
+
+    /* Modal */
+    .modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      place-items: center;
+      padding: 20px;
+      background: rgba(0,0,0,.78);
+      backdrop-filter: blur(8px);
+      z-index: 3000;
+    }
+
+    .modal.open {
+      display: grid;
+    }
+
+    .modal-content {
+      width: min(600px, 100%);
+      max-height: 85vh;
+      overflow: auto;
+      padding: 30px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 25px;
+      box-shadow: var(--shadow);
+      animation: modalIn .25s ease;
+    }
+
+    .modal-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .close {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--card);
+      color: var(--text);
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      padding: 14px 18px;
+      background: #17171b;
+      color: white;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      transform: translateY(120px);
+      opacity: 0;
+      transition: .3s;
+      z-index: 5000;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    #topBtn {
+      position: fixed;
+      right: 20px;
+      bottom: 80px;
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      color: white;
+      background: var(--red);
+      opacity: 0;
+      pointer-events: none;
+      transition: .3s;
+      z-index: 500;
+    }
+
+    #topBtn.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: .7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @keyframes heroIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes modalIn {
+      from { opacity: 0; transform: scale(.94); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    /* Responsive */
+    @media (max-width: 1000px) {
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .nav-links {
+        gap: 12px;
+      }
+
+      .stats {
+        position: relative;
+        right: auto;
+        bottom: auto;
+        margin: 60px auto 20px;
+      }
+
+      .hero {
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .hero-content {
+        padding-top: 100px;
+      }
+    }
+
+    @media (max-width: 760px) {
+      section {
+        padding: 75px 0;
+      }
+
+      .nav-links {
+        position: fixed;
+        top: 72px;
+        left: 0;
+        width: 100%;
+        padding: 20px;
+        display: none;
+        flex-direction: column;
+        align-items: stretch;
+        background: var(--bg2);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .nav-links.open {
+        display: flex;
+      }
+
+      .nav-links a {
+        padding: 12px;
+      }
+
+      .menu-btn {
+        display: block;
+      }
+
+      .hero {
+        min-height: 850px;
+      }
+
+      .hero h1 {
+        letter-spacing: -4px;
+      }
+
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .stat {
+        border-bottom: 1px solid var(--border);
+      }
+
+      .stat:nth-child(2) {
+        border-right: 0;
+      }
+
+      .stat:nth-child(3),
+      .stat:nth-child(4) {
+        border-bottom: 0;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .planner,
+      .about-grid,
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .about-list {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .section-head {
+        align-items: start;
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .about-list {
+        grid-template-columns: 1fr;
+      }
+
+      .planner {
+        padding: 20px;
+      }
+
+      .hero h1 {
+        font-size: 4rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="progress"></div>
+
+  <header>
+    <div class="container nav">
+      <a class="logo" href="#home">FREE <span>FIRE</span> HUB</a>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a class="active" href="#home">Главная</a></li>
+        <li><a href="#characters">Персонажи</a></li>
+        <li><a href="#weapons">Оружие</a></li>
+        <li><a href="#modes">Режимы</a></li>
+        <li><a href="#tips">Советы</a></li>
+        <li><a href="#news">Новости</a></li>
+        <li><a href="#about">О игре</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button class="icon-btn" id="searchBtn" aria-label="Поиск">⌕</button>
+        <button class="icon-btn" id="themeBtn" aria-label="Сменить тему">☀</button>
+        <button class="menu-btn" id="menuBtn" aria-label="Меню">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="search-box" id="searchBox">
+    <input id="searchInput" type="search" placeholder="Поиск персонажа, оружия, режима...">
+    <div class="search-results" id="searchResults"></div>
+  </div>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero" id="home">
+      <div class="container">
+        <div class="hero-content">
+          <div class="badge">🔥 FAN GAMING PORTAL</div>
+          <h1>FREE <span>FIRE</span></h1>
+          <p>Выживай. Сражайся. Побеждай. Изучай персонажей, оружие, режимы и полезные советы для своих матчей.</p>
+
+          <div class="buttons">
+            <a href="#characters" class="btn btn-primary">Исследовать игру →</a>
+            <a href="#tips" class="btn btn-secondary">Смотреть советы</a>
+          </div>
+        </div>
+
+        <div class="stats">
+          <div class="stat">
+            <strong data-counter="100">0M+</strong>
+            <span>Игроков</span>
+          </div>
+          <div class="stat">
+            <strong data-counter="50">0+</strong>
+            <span>Персонажей</span>
+          </div>
+          <div class="stat">
+            <strong data-counter="20">0+</strong>
+            <span>Режимов</span>
+          </div>
+          <div class="stat">
+            <strong data-counter="7">0+</strong>
+            <span>Лет истории</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHARACTERS -->
+    <section id="characters">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow">Герои</div>
+            <h2>Выбери своего персонажа</h2>
+          </div>
+          <p class="section-desc">У каждого героя есть уникальная способность. Подбирай персонажа под свой стиль игры.</p>
+        </div>
+
+        <div class="filters reveal">
+          <button class="filter active" data-filter="all">Все</button>
+          <button class="filter" data-filter="rush">Rush</button>
+          <button class="filter" data-filter="support">Support</button>
+          <button class="filter" data-filter="sniper">Sniper</button>
+        </div>
+
+        <br>
+
+        <div class="grid" id="characterGrid">
+          <article class="card reveal searchable" data-category="rush" data-search="Alok персонаж">
+            <div class="card-img">
+              <img loading="lazy" alt="Игровой персонаж Alok" src="https://images.unsplash.com/photo-1560419015-7c427e8ae5ba?auto=format&fit=crop&w=800&q=85" onerror="this.style.display='none'">
+            </div>
+            <div class="card-body">
+              <h3>Alok</h3>
+              <p>Поддержка команды и восстановление HP во время интенсивных боёв.</p>
+              <div class="meta"><span>Support</span><span>Универсальный</span></div>
+              <button class="btn btn-primary details" data-title="Alok" data-text="Alok подходит игрокам, которые любят мобильность и поддержку команды. Его способность помогает поддерживать темп боя и быстро менять позицию.">Подробнее</button>
+            </div>
+          </article>
+
+          <article class="card reveal searchable" data-category="rush" data-search="Chrono персонаж">
+            <div class="card-img">
+              <img loading="lazy" alt="Игровой персонаж Chrono" src="https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=800&q=85" onerror="this.style.display='none'">
+            </div>
+            <div class="card-body">
+              <h3>Chrono</h3>
+              <p>Персонаж для тактической защиты и быстрых перестрелок.</p>
+              <div class="meta"><span>Rush</span><span>Тактика</span></div>
+              <button class="btn btn-primary details" data-title="Chrono" data-text="Chrono может быть полезен для игроков, которые любят играть агрессивно, но хотят иметь дополнительную защиту в критический момент.">Подробнее</button>
+            </div>
+          </article>
+
+          <article class="card reveal searchable" data-category="rush" data-search="Kelly персонаж">
+            <div class="card-img">
+              <img loading="lazy" alt="Игровой персонаж Kelly" src="https://images.unsplash.com/photo-1600080972464-8e5f35f63d08?auto=format&fit=crop&w=800&q=85" onerror="this.style.display='none'">
+            </div>
+            <div class="card-body">
+              <h3>Kelly</h3>
+              <p>Высокая мобильность для стремительных перемещений по карте.</p>
+              <div class="meta"><span>Rush</span><span>Скорость</span></div>
+              <button class="btn btn-primary details" data-title="Kelly" data-text="Kelly хорошо подходит для динамичного стиля. Скорость позволяет быстрее занимать позиции и менять направление атаки.">Подробнее</button>
+            </div>
+          </article>
+
+          <article class="card reveal searchable" data-category="sniper" data-search="Hayato персонаж">
+            <div class="card-img">
+              <img loading="lazy" alt="Игровой персонаж Hayato" src="https://images.unsplash.com/photo-1542751110-97427bbecf20?auto=format&fit=crop&w=800&q=85" onerror="this.style.display='none'">
+            </div>
+            <div class="card-body">
+              <h3>Hayato</h3>
+              <p>Персонаж для игроков, предпочитающих точные и рискованные дуэли.</p>
+              <div class="meta"><span>Sniper</span><span>Дуэль</span></div>
+              <button class="btn btn-primary details" data-title="Hayato" data-text="Hayato подходит для игроков, которые уверенно чувствуют себя в перестрелках один на один и умеют контролировать дистанцию.">Подробнее</button>
+            </div>
+          </article>
+
+          <article class="card reveal searchable" data-category="sniper" data-search="Moco персонаж">
+            <div class="card-img">
+              <img loading="lazy" alt="Игровой персонаж Moco" src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=85" onerror="this.style.display='none'">
+            </div>
+            <div class="card-body">
+              <h3>Moco</h3>
+              <p>Разведка и получение дополнительной информации о противниках.</p>
+              <div class="meta"><span>Sniper</span><span>Разведка</span></div>
+              <button class="btn btn-primary details" data-title="Moco" data-text="Moco особенно интересна игрокам, которым нравится получать информацию и помогать команде находить противников.">Подробнее</button>
+            </div>
+          </article>
+
+          <article class="card reveal searchable" data-category="support" data-search="K персонаж">
+            <div class="card-img">
+              <img loading="lazy" alt="Игровой персонаж K" src="https://images.unsplash.com/photo-1614680376593-902f74cf0d41?auto=format&fit=crop&w=800&q=85" onerror="this.style.display='none'">
+            </div>
+            <div class="card-body">
+              <h3>K</h3>
+              <p>Гибкий персонаж для командной игры и управления ресурсами.</p>
+              <div class="meta"><span>Support</span><span>Команда</span></div>
+              <button class="btn btn-primary details" data-title="K" data-text="K ориентирован на гибкий стиль игры и может быть полезен в командных ситуациях, где важно грамотно управлять ресурсами.">Подробнее</button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- WEAPONS -->
+    <section id="weapons">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow">Арсенал</div>
+            <h2>Оружие</h2>
+          </div>
+          <p class="section-desc">Выбирай оружие в зависимости от дистанции, карты и своего стиля игры.</p>
+        </div>
+
+        <div class="grid">
+          <article class="card weapon-card reveal searchable" data-search="MP40 оружие">
+            <div class="weapon-icon">🔫</div>
+            <h3>MP40</h3>
+            <p>SMG • ближний бой</p>
+            <div class="weapon-stats">
+              <div class="bar"><div class="bar-top"><span>Урон</span><b>75%</b></div><div class="bar-line"><i style="width:75%"></i></div></div>
+              <div class="bar"><div class="bar-top"><span>Точность</span><b>60%</b></div><div class="bar-line"><i style="width:60%"></i></div></div>
+              <div class="bar"><div class="bar-top"><span>Скорость</span><b>95%</b></div><div class="bar-line"><i style="width:95%"></i></div></div>
+            </div>
+          </article>
+
+          <article class="card weapon-card reveal searchable" data-search="M1887 оружие">
+            <div class="weapon-icon">💥</div>
+            <h3>M1887</h3>
+            <p>Shotgun • ближний бой</p>
+            <div class="weapon-stats">
+              <div class="bar"><div class="bar-top"><span>Урон</span><b>95%</b></div><div class="bar-line"><i style="width:95%"></i></div></div>
+              <div class="bar"><div class="bar-top"><span>Точность</span><b>50%</b></div><div class="bar-line"><i style="width:50%"></i></div></div>
+              <div class="bar"><div class="bar-top"><span>Скорость</span><b>60%</b></div><div class="bar-line"><i style="width:60%"></i></div></div>
+            </div>
+          </article>
+
+          <article class="card weapon-card reveal searchable" data-search="AWM оружие снайпер">
+            <div class="weapon-icon">🎯</div>
+            <h3>AWM</h3>
+            <p>Sniper • дальний бой</p>
+            <div class="weapon-stats">
+              <div class="bar"><div class="bar-top"><span>Урон</span><b>100%</b></div><div class="bar-line"><i style="width:100%"></i></div></div>
+              <div class="bar"><div class="bar-top"><span>Точность</span><b>95%</b></div><div class="bar-line"><i style="width:95%"></i></div></div>
+              <div class="bar"><div class="bar-top"><span>Скорость</span><b>30%</b></div><div class="bar-line"><i style="width:30%"></i></div></div>
+            </div>
+          </article>
+
+          <article class="card weapon-card reveal searchable" data-search="SCAR оружие">
+            <div class="weapon-icon">🔫</div>
+            <h3>SCAR</h3>
+            <p>AR • универсальное</p>
+            <div class="weapon-stats">
+              <div class="bar"><div class="bar-top"><span>Урон</span><b>70%</b></div><div class="bar-line"><i style="width:70%"></i></div></div>
+              <div class="bar"><div class="bar-top"><span>Точность</span><b>75%</b></div><div class="bar-line"><i style="width:75%"></i></div></div>
+              <div class="bar"><div class="bar-top"><span>Скорость</span><b>72%</b></div><div class="bar-line"><i style="width:72%"></i></div></div>
+            </div>
+          </article>
+
+          <article class="card weapon-card reveal searchable" data-search="Groza оружие">
+            <div class="weapon-icon">⚡</div>
+            <h3>Groza</h3>
+            <p>AR • средняя дистанция</p>
+            <div class="weapon-stats">
+              <div class="bar"><div class="bar-top"><span>Урон</span><b>82%</b></div><div class="bar-line"><i style="width:82%"></i></div></div>
+              <div class="bar"><div class="bar-top"><span>Точность</span><b>82%</b></div><div class="bar-line"><i style="width:82%"></i></div></div>
+              <div class="bar"><div class="bar-top"><span>Скорость</span><b>80%</b></div><div class="bar-line"><i style="width:80%"></i></div></div>
+            </div>
+          </article>
+
+          <article class="card weapon-card reveal searchable" data-search="AK47 оружие">
+            <div class="weapon-icon">🔫</div>
+            <h3>AK47</h3>
+            <p>AR • высокий урон</p>
+            <div class="weapon-stats">
+              <div class="bar"><div class="bar-top"><span>Урон</span><b>90%</b></div><div class="bar-line"><i style="width:90%"></i></div></div>
+              <div class="bar"><div class="bar-top"><span>Точность</span><b>55%</b></div><div class="bar-line"><i style="width:55%"></i></div></div>
+              <div class="bar"><div class="bar-top"><span>Скорость</span><b>65%</b></div><div class="bar-line"><i style="width:65%"></i></div></div>
+            </div>
+          </article>
+
+          <article class="card weapon-card reveal searchable" data-search="Desert Eagle оружие">
+            <div class="weapon-icon">🔫</div>
+            <h3>Desert Eagle</h3>
+            <p>Pistol • точечный урон</p>
+            <div class="weapon-stats">
+              <div class="bar"><div class="bar-top"><span>Урон</span><b>85%</b></div><div class="bar-line"><i style="width:85%"></i></div></div>
+              <div class="bar"><div class="bar-top"><span>Точность</span><b>70%</b></div><div class="bar-line"><i style="width:70%"></i></div></div>
+              <div class="bar"><div class="bar-top"><span>Скорость</span><b>45%</b></div><div class="bar-line"><i style="width:45%"></i></div></div>
+            </div>
+          </article>
+
+          <article class="card weapon-card reveal searchable" data-search="M1014 оружие">
+            <div class="weapon-icon">💥</div>
+            <h3>M1014</h3>
+            <p>Shotgun • ближний бой</p>
+            <div class="weapon-stats">
+              <div class="bar"><div class="bar-top"><span>Урон</span><b>88%</b></div><div class="bar-line"><i style="width:88%"></i></div></div>
+              <div class="bar"><div class="bar-top"><span>Точность</span><b>48%</b></div><div class="bar-line"><i style="width:48%"></i></div></div>
+              <div class="bar"><div class="bar-top"><span>Скорость</span><b>70%</b></div><div class="bar-line"><i style="width:70%"></i></div></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- MODES -->
+    <section id="modes">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow">Game modes</div>
+            <h2>Игровые режимы</h2>
+          </div>
+        </div>
+
+        <div class="grid">
+          <article class="card reveal">
+            <div class="card-img">
+              <img loading="lazy" alt="Battle Royale игровой режим" src="https://images.unsplash.com/photo-1542751371-6533c3e7c4c1?auto=format&fit=crop&w=900&q=85">
+            </div>
+            <div class="card-body">
+              <h3>Battle Royale</h3>
+              <p>Исследуй карту, собирай экипировку и старайся остаться последним.</p>
+              <div class="meta"><span>До 50 игроков</span><span>⚔️</span></div>
+              <button class="btn btn-primary details" data-title="Battle Royale" data-text="Классический режим выживания. Важно правильно выбрать место приземления, собрать экипировку и контролировать безопасную зону.">Подробнее</button>
+            </div>
+          </article>
+
+          <article class="card reveal">
+            <div class="card-img">
+              <img loading="lazy" alt="Clash Squad игровой режим" src="https://images.unsplash.com/photo-1547394765-185e1e68f34e?auto=format&fit=crop&w=900&q=85">
+            </div>
+            <div class="card-body">
+              <h3>Clash Squad</h3>
+              <p>Командные раунды, где важны тактика, экономика и точность.</p>
+              <div class="meta"><span>4 × 4</span><span>🔥</span></div>
+              <button class="btn btn-primary details" data-title="Clash Squad" data-text="Раундовый командный режим. Успех зависит от коммуникации, выбора оружия и умения адаптироваться к действиям соперников.">Подробнее</button>
+            </div>
+          </article>
+
+          <article class="card reveal">
+            <div class="card-img">
+              <img loading="lazy" alt="Ranked режим Free Fire" src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=900&q=85">
+            </div>
+            <div class="card-body">
+              <h3>Ranked</h3>
+              <p>Соревновательный формат для игроков, которые хотят повышать свой ранг.</p>
+              <div class="meta"><span>Рейтинг</span><span>🏆</span></div>
+              <button class="btn btn-primary details" data-title="Ranked" data-text="Соревновательная игра, где результат матчей влияет на продвижение по рейтингу.">Подробнее</button>
+            </div>
+          </article>
+
+          <article class="card reveal">
+            <div class="card-img">
+              <img loading="lazy" alt="Lone Wolf режим Free Fire" src="https://images.unsplash.com/photo-1511882150382-421056c89033?auto=format&fit=crop&w=900&q=85">
+            </div>
+            <div class="card-body">
+              <h3>Lone Wolf</h3>
+              <p>Быстрые индивидуальные дуэли для тренировки механики.</p>
+              <div class="meta"><span>1 × 1</span><span>🐺</span></div>
+              <button class="btn btn-primary details" data-title="Lone Wolf" data-text="Подходит для быстрых тренировочных дуэлей и проверки индивидуального навыка.">Подробнее</button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- TIPS -->
+    <section id="tips">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow">Pro tips</div>
+            <h2>Советы игрокам</h2>
+          </div>
+        </div>
+
+        <div class="grid">
+          <article class="card experience-card reveal">
+            <div class="experience-icon">🪂</div>
+            <h3>Правильно приземляйся</h3>
+            <p>Выбирай место с хорошим балансом между безопасностью и количеством лута.</p>
+            <button class="btn btn-secondary details" data-title="Правильное приземление" data-text="Старайся заранее планировать маршрут. Если играешь командой, выбирайте место вместе и избегайте хаотичных приземлений.">Читать</button>
+          </article>
+
+          <article class="card experience-card reveal">
+            <div class="experience-icon">🎒</div>
+            <h3>Быстрый лут</h3>
+            <p>Сначала ищи основное оружие, броню и лечение, а затем улучшай экипировку.</p>
+            <button class="btn btn-secondary details" data-title="Быстрый лут" data-text="В первые секунды матча приоритетом обычно являются оружие и защитные предметы. Не трать слишком много времени на второстепенные предметы.">Читать</button>
+          </article>
+
+          <article class="card experience-card reveal">
+            <div class="experience-icon">🧱</div>
+            <h3>Gloo Wall</h3>
+            <p>Используй укрытие, чтобы изменить линию огня и получить время для решения.</p>
+            <button class="btn btn-secondary details" data-title="Gloo Wall" data-text="Не ставь укрытие автоматически. Используй его для разрыва дистанции, лечения, смены позиции или создания безопасного угла атаки.">Читать</button>
+          </article>
+
+          <article class="card experience-card reveal">
+            <div class="experience-icon">🎯</div>
+            <h3>Тренируй aim</h3>
+            <p>Регулярно тренируй контроль отдачи и движение при стрельбе.</p>
+            <button class="btn btn-secondary details" data-title="Aim" data-text="Начни с тренировочного режима. Отрабатывай движение прицела, короткие очереди и перевод прицела между целями.">Читать</button>
+          </article>
+
+          <article class="card experience-card reveal">
+            <div class="experience-icon">🏃</div>
+            <h3>Двигайся правильно</h3>
+            <p>Не стой на одном месте во время перестрелки.</p>
+            <button class="btn btn-secondary details" data-title="Движение" data-text="Меняй направление и используй укрытия. Предсказуемое движение делает тебя более лёгкой целью.">Читать</button>
+          </article>
+
+          <article class="card experience-card reveal">
+            <div class="experience-icon">🤝</div>
+            <h3>Играй командой</h3>
+            <p>Общение и правильное распределение ролей часто важнее индивидуального rush.</p>
+            <button class="btn btn-secondary details" data-title="Командная игра" data-text="Договаривайтесь о маршруте, сообщайте информацию и не разделяйтесь без необходимости.">Читать</button>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- PLANNER -->
+    <section id="settings">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow">Settings lab</div>
+            <h2>Генератор настроек</h2>
+          </div>
+          <p class="section-desc">Получай стартовый вариант настроек и адаптируй его под своё устройство и ощущения.</p>
+        </div>
+
+        <div class="planner reveal">
+          <div>
+            <div class="form-group">
+              <label for="device">Устройство</label>
+              <select id="device">
+                <option>Android</option>
+                <option>iPhone</option>
+                <option>PC</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="style">Стиль игры</label>
+              <select id="style">
+                <option>Rush</option>
+                <option>Balanced</option>
+                <option>Sniper</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="level">Уровень</label>
+              <select id="level">
+                <option>Новичок</option>
+                <option>Средний</option>
+                <option>Профессионал</option>
+              </select>
+            </div>
+
+            <button class="btn btn-primary" id="generateSettings">Получить настройки</button>
+          </div>
+
+          <div class="recommendation" id="settingsResult">
+            <h3>Твои настройки появятся здесь</h3>
+            <p style="color:var(--muted)">Выбери устройство, стиль и уровень, затем нажми кнопку.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEWS -->
+    <section id="news">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow">Updates</div>
+            <h2>Новости</h2>
+          </div>
+        </div>
+
+        <div class="grid">
+          <article class="card reveal">
+            <div class="card-body">
+              <div class="eyebrow">12.08.2026</div>
+              <h3>Новое обновление</h3>
+              <p>Следи за изменениями игрового процесса, балансом и новыми возможностями.</p>
+              <button class="btn btn-secondary details" data-title="Новое обновление" data-text="В обновлениях могут изменяться баланс, карты, персонажи и игровые механики. Проверяй официальные источники игры перед матчами.">Читать</button>
+            </div>
+          </article>
+
+          <article class="card reveal">
+            <div class="card-body">
+              <div class="eyebrow">05.08.2026</div>
+              <h3>Новый персонаж</h3>
+              <p>Новые способности открывают дополнительные варианты командной тактики.</p>
+              <button class="btn btn-secondary details" data-title="Новый персонаж" data-text="Новые персонажи могут менять привычные стратегии. Изучи способность и потренируй её в безопасном режиме.">Читать</button>
+            </div>
+          </article>
+
+          <article class="card reveal">
+            <div class="card-body">
+              <div class="eyebrow">28.07.2026</div>
+              <h3>Новый режим</h3>
+              <p>Новые режимы помогают разнообразить игровой опыт и тренировать навыки.</p>
+              <button class="btn btn-secondary details" data-title="Новый режим" data-text="Перед игрой изучи правила режима и попробуй несколько разных стратегий.">Читать</button>
+            </div>
+          </article>
+
+          <article class="card reveal">
+            <div class="card-body">
+              <div class="eyebrow">20.07.2026</div>
+              <h3>Новые события</h3>
+              <p>Следи за временными событиями и внутриигровыми активностями.</p>
+              <button class="btn btn-secondary details" data-title="Новые события" data-text="События могут быть временными. Всегда проверяй условия и сроки непосредственно в игре.">Читать</button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- MAP -->
+    <section id="map-section">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow">Explore</div>
+            <h2>Карта мира</h2>
+          </div>
+          <p class="section-desc">Нажми на маркер, чтобы узнать больше о локации.</p>
+        </div>
+
+        <div class="map reveal">
+          <div class="map-shape"></div>
+
+          <button class="marker m1" data-name="Bermuda" data-info="Bermuda — одна из знаковых локаций мира Free Fire."></button>
+          <button class="marker m2" data-name="Clock Tower" data-info="Clock Tower — узнаваемая игровая точка для быстрых перестрелок."></button>
+          <button class="marker m3" data-name="Peak" data-info="Peak — популярная зона с интересными позициями."></button>
+          <button class="marker m4" data-name="Factory" data-info="Factory — территория с большим количеством укрытий."></button>
+          <button class="marker m5" data-name="Hangar" data-info="Hangar — место для динамичных сражений."></button>
+          <button class="marker m6" data-name="Observatory" data-info="Observatory — зона с открытыми линиями обзора."></button>
+          <button class="marker m7" data-name="Pochinok" data-info="Pochinok — локация для поиска ресурсов и быстрых ротаций."></button>
+          <button class="marker m8" data-name="Mars Electric" data-info="Mars Electric — крупная промышленная зона карты."></button>
+
+          <div class="map-info" id="mapInfo">
+            <h3>🗺️ Выбери точку</h3>
+            <p style="color:#aaa">Нажми на любой красный маркер.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow">About</div>
+            <h2>О Free Fire</h2>
+          </div>
+        </div>
+
+        <div class="about-grid">
+          <div class="about-main reveal">
+            <div class="badge">BATTLE ROYALE</div>
+            <h2>Быстрые матчи. Большая конкуренция.</h2>
+            <p>Free Fire — мобильная battle royale-игра, в которой игроки соревнуются на компактных картах, собирают снаряжение и используют разные игровые стратегии.</p>
+          </div>
+
+          <div class="about-list">
+            <div class="about-item reveal">
+              <span>⚔️</span>
+              <h3>Battle Royale</h3>
+              <p>Исследование карты и борьба за выживание.</p>
+            </div>
+            <div class="about-item reveal">
+              <span>🧑‍🚀</span>
+              <h3>Персонажи</h3>
+              <p>Уникальные способности и разные игровые стили.</p>
+            </div>
+            <div class="about-item reveal">
+              <span>🔫</span>
+              <h3>Оружие</h3>
+              <p>Разные классы оружия для различных дистанций.</p>
+            </div>
+            <div class="about-item reveal">
+              <span>🤝</span>
+              <h3>Команда</h3>
+              <p>Коммуникация и тактика помогают побеждать.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOD -->
+    <section id="food">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow">Gaming menu</div>
+            <h2>Любимые игровые предметы</h2>
+          </div>
+        </div>
+
+        <div class="grid">
+          <article class="card food-card reveal"><div class="food-icon">🩹</div><h3>Med Kit</h3><p>Восстановление здоровья.</p></article>
+          <article class="card food-card reveal"><div class="food-icon">🧱</div><h3>Gloo Wall</h3><p>Быстрое временное укрытие.</p></article>
+          <article class="card food-card reveal"><div class="food-icon">🛡️</div><h3>Armor</h3><p>Дополнительная защита.</p></article>
+          <article class="card food-card reveal"><div class="food-icon">🎒</div><h3>Backpack</h3><p>Больше места для ресурсов.</p></article>
+          <article class="card food-card reveal"><div class="food-icon">💨</div><h3>Grenade</h3><p>Тактическое давление на противника.</p></article>
+          <article class="card food-card reveal"><div class="food-icon">🔭</div><h3>Scope</h3><p>Помогает контролировать дальние дистанции.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- TRAVEL INFO -->
+    <section id="travel">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow">Game info</div>
+            <h2>Полезная информация</h2>
+          </div>
+        </div>
+
+        <div class="grid">
+          <article class="card info-card reveal"><div class="info-icon">📱</div><h3>Android</h3><p>Используй стабильное интернет-соединение и закрывай ненужные приложения перед игрой.</p></article>
+          <article class="card info-card reveal"><div class="info-icon">🍎</div><h3>iPhone</h3><p>Для стабильного FPS следи за температурой устройства и свободным местом.</p></article>
+          <article class="card info-card reveal"><div class="info-icon">🖥️</div><h3>PC</h3><p>Если играешь через поддерживаемую платформу, настрой управление под свой стиль.</p></article>
+          <article class="card info-card reveal"><div class="info-icon">🌐</div><h3>Интернет</h3><p>Стабильное соединение помогает уменьшить задержку и случайные разрывы.</p></article>
+          <article class="card info-card reveal"><div class="info-icon">🎮</div><h3>Управление</h3><p>Настрой расположение кнопок так, чтобы основные действия были доступны без лишнего движения пальца.</p></article>
+          <article class="card info-card reveal"><div class="info-icon">🔊</div><h3>Звук</h3><p>Звуковые сигналы могут помочь заметить противника и определить направление.</p></article>
+          <article class="card info-card reveal"><div class="info-icon">⚙️</div><h3>Графика</h3><p>Выбирай баланс между качеством изображения и стабильностью производительности.</p></article>
+          <article class="card info-card reveal"><div class="info-icon">🛡️</div><h3>Безопасность</h3><p>Не сообщай пароль и данные аккаунта другим людям и избегай подозрительных сайтов.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section id="gallery">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow">Visuals</div>
+            <h2>Gaming Gallery</h2>
+          </div>
+        </div>
+
+        <div class="gallery reveal">
+          <div class="gallery-item">
+            <img loading="lazy" alt="Игровой компьютер и монитор" src="https://images.unsplash.com/photo-1547394765-185e1e68f34e?auto=format&fit=crop&w=800&q=85">
+            <span>Battle</span>
+          </div>
+          <div class="gallery-item">
+            <img loading="lazy" alt="Игровой персонаж" src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=85">
+            <span>Characters</span>
+          </div>
+          <div class="gallery-item">
+            <img loading="lazy" alt="Игровой сетап" src="https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=800&q=85">
+            <span>Gaming</span>
+          </div>
+          <div class="gallery-item">
+            <img loading="lazy" alt="Игровая клавиатура" src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=800&q=85">
+            <span>Setup</span>
+          </div>
+          <div class="gallery-item">
+            <img loading="lazy" alt="Игровой монитор" src="https://images.unsplash.com/photo-1603481546238-487240415921?auto=format&fit=crop&w=800&q=85">
+            <span>Ranked</span>
+          </div>
+          <div class="gallery-item">
+            <img loading="lazy" alt="Геймпад и игровая атмосфера" src="https://images.unsplash.com/photo-1592840496694-26c035b52b7f?auto=format&fit=crop&w=800&q=85">
+            <span>Squad</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- REVIEWS -->
+    <section id="reviews">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow">Community</div>
+            <h2>Отзывы игроков</h2>
+          </div>
+        </div>
+
+        <div class="grid">
+          <article class="card review reveal">
+            <div class="stars">★★★★★</div>
+            <p>«Отличный фанатский портал. Особенно понравился раздел с советами и генератор настроек.»</p>
+            <div class="reviewer"><strong>Daniel</strong> — United Kingdom</div>
+          </article>
+
+          <article class="card review reveal">
+            <div class="stars">★★★★★</div>
+            <p>«Удобно смотреть информацию о персонажах и оружии перед матчем. Сайт быстро работает.»</p>
+            <div class="reviewer"><strong>Arman</strong> — Kazakhstan</div>
+          </article>
+
+          <article class="card review reveal">
+            <div class="stars">★★★★☆</div>
+            <p>«Очень красивый дизайн и хорошая мобильная версия. Использую как небольшую шпаргалку.»</p>
+            <div class="reviewer"><strong>Lucas</strong> — Brazil</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow">FAQ</div>
+            <h2>Частые вопросы</h2>
+          </div>
+        </div>
+
+        <div class="faq">
+          <div class="faq-item reveal">
+            <button class="faq-question">Что такое Free Fire? <span>+</span></button>
+            <div class="faq-answer"><div><p>Free Fire — мобильная battle royale-игра с короткими матчами, персонажами, оружием и командными режимами.</p></div></div>
+          </div>
+
+          <div class="faq-item reveal">
+            <button class="faq-question">Как улучшить навыки? <span>+</span></button>
+            <div class="faq-answer"><div><p>Регулярно тренируй aim, движение, позиционирование и анализируй свои ошибки после матчей.</p></div></div>
+          </div>
+
+          <div class="faq-item reveal">
+            <button class="faq-question">Как работает Clash Squad? <span>+</span></button>
+            <div class="faq-answer"><div><p>Это раундовый командный режим, в котором игроки сражаются небольшими командами и выбирают экипировку.</p></div></div>
+          </div>
+
+          <div class="faq-item reveal">
+            <button class="faq-question">Что такое Gloo Wall? <span>+</span></button>
+            <div class="faq-answer"><div><p>Gloo Wall — временное укрытие, которое можно использовать для защиты и изменения позиции.</p></div></div>
+          </div>
+
+          <div class="faq-item reveal">
+            <button class="faq-question">Какое оружие лучше для ближнего боя? <span>+</span></button>
+            <div class="faq-answer"><div><p>Для ближнего боя часто выбирают SMG или дробовики. Лучший выбор зависит от навыков и ситуации.</p></div></div>
+          </div>
+
+          <div class="faq-item reveal">
+            <button class="faq-question">Как выбрать персонажа? <span>+</span></button>
+            <div class="faq-answer"><div><p>Выбирай персонажа исходя из своей роли: агрессивный rush, поддержка, разведка или дальняя дистанция.</p></div></div>
+          </div>
+
+          <div class="faq-item reveal">
+            <button class="faq-question">Как играть с друзьями? <span>+</span></button>
+            <div class="faq-answer"><div><p>Добавь друзей в игре и создай команду. Используйте голосовую связь и заранее договоритесь о стратегии.</p></div></div>
+          </div>
+
+          <div class="faq-item reveal">
+            <button class="faq-question">Как улучшить aim? <span>+</span></button>
+            <div class="faq-answer"><div><p>Используй тренировочный режим, экспериментируй с чувствительностью и тренируй плавное движение прицела.</p></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow">Contact</div>
+            <h2>Связаться с нами</h2>
+          </div>
+        </div>
+
+        <div class="contact-grid">
+          <div class="contact-info reveal">
+            <div class="badge">FREE FIRE HUB</div>
+            <h2>Есть идея?</h2>
+            <p style="color:var(--muted); margin-top:15px">
+              Предложи новую функцию, сообщи об ошибке или поделись идеей для сайта.
+            </p>
+
+            <br>
+
+            <p>📧 Email: hello@freefirehub.example</p>
+            <p>🎮 Community: Free Fire players</p>
+            <p>🌍 Fan project</p>
+          </div>
+
+          <form class="contact-form reveal" id="contactForm">
+            <div class="form-group">
+              <label for="name">Имя</label>
+              <input id="name" type="text" required minlength="2" placeholder="Ваше имя">
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input id="email" type="email" required placeholder="you@example.com">
+            </div>
+
+            <div class="form-group">
+              <label for="message">Сообщение</label>
+              <textarea id="message" required minlength="10" placeholder="Ваше сообщение..."></textarea>
+            </div>
+
+            <button class="btn btn-primary" type="submit">Отправить сообщение →</button>
+            <div class="success" id="success">✓ Сообщение успешно отправлено! Это демонстрационная форма.</div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="logo">FREE <span>FIRE</span> HUB</div>
+          <p style="color:var(--muted); margin-top:8px">Фанатский портал для игроков.</p>
+        </div>
+
+        <div class="footer-links">
+          <a href="#home">Главная</a>
+          <a href="#characters">Персонажи</a>
+          <a href="#weapons">Оружие</a>
+          <a href="#tips">Советы</a>
+          <a href="#about">О игре</a>
+        </div>
+      </div>
+
+      <p class="disclaimer">
+        FREE FIRE HUB — фанатский информационный сайт. Не является официальным сайтом Garena.
+        Все названия и связанные с игрой элементы принадлежат соответствующим правообладателям.
+      </p>
+    </div>
+  </footer>
+
+  <!-- MODAL -->
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <div class="modal-top">
+        <h2 id="modalTitle">Подробнее</h2>
+        <button class="close" id="closeModal" aria-label="Закрыть">×</button>
+      </div>
+      <p id="modalText" style="color:var(--muted); line-height:1.8"></p>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">Готово!</div>
+  <button id="topBtn" aria-label="Наверх">↑</button>
+
+  <script>
+    "use strict";
+
+    /* ---------- Helpers ---------- */
+    const $ = (selector, parent = document) => parent.querySelector(selector);
+    const $$ = (selector, parent = document) => [...parent.querySelectorAll(selector)];
+
+    function showToast(message) {
+      const toast = $("#toast");
+      toast.textContent = message;
+      toast.classList.add("show");
+
+      clearTimeout(window.toastTimer);
+      window.toastTimer = setTimeout(() => {
+        toast.classList.remove("show");
+      }, 2500);
+    }
+
+    /* ---------- Mobile menu ---------- */
+    const menuBtn = $("#menuBtn");
+    const navLinks = $("#navLinks");
+
+    menuBtn.addEventListener("click", () => {
+      navLinks.classList.toggle("open");
+      menuBtn.textContent = navLinks.classList.contains("open") ? "×" : "☰";
+    });
+
+    $$("#navLinks a").forEach(link => {
+      link.addEventListener("click", () => {
+        navLinks.classList.remove("open");
+        menuBtn.textContent = "☰";
+      });
+    });
+
+    /* ---------- Theme ---------- */
+    const themeBtn = $("#themeBtn");
+
+    if (localStorage.getItem("ff-theme") === "light") {
+      document.body.classList.add("light");
+      themeBtn.textContent = "☾";
+    }
+
+    themeBtn.addEventListener("click", () => {
+      document.body.classList.toggle("light");
+
+      const light = document.body.classList.contains("light");
+      themeBtn.textContent = light ? "☾" : "☀";
+      localStorage.setItem("ff-theme", light ? "light" : "dark");
+
+      showToast(light ? "Светлая тема включена" : "Тёмная тема включена");
+    });
+
+    /* ---------- Search ---------- */
+    const searchBtn = $("#searchBtn");
+    const searchBox = $("#searchBox");
+    const searchInput = $("#searchInput");
+    const searchResults = $("#searchResults");
+
+    const searchable = $$(".searchable");
+
+    searchBtn.addEventListener("click", () => {
+      searchBox.classList.toggle("open");
+
+      if (searchBox.classList.contains("open")) {
+        searchInput.focus();
+      }
+    });
+
+    searchInput.addEventListener("input", () => {
+      const query = searchInput.value.trim().toLowerCase();
+      searchResults.innerHTML = "";
+
+      if (!query) {
+        searchResults.innerHTML = "<div style='color:#888'>Начните вводить запрос...</div>";
+        return;
+      }
+
+      const matches = searchable.filter(item => {
+        return (item.dataset.search || "").toLowerCase().includes(query);
+      });
+
+      if (!matches.length) {
+        searchResults.innerHTML = "<div style='color:#888'>Ничего не найдено.</div>";
+        return;
+      }
+
+      matches.forEach(item => {
+        const title = $("h3", item)?.textContent || "Результат";
+
+        const result = document.createElement("div");
+        result.textContent = title;
+        result.style.cursor = "pointer";
+
+        result.addEventListener("click", () => {
+          searchBox.classList.remove("open");
+          item.scrollIntoView({ behavior: "smooth", block: "center" });
+          item.style.outline = "2px solid var(--red)";
+
+          setTimeout(() => {
+            item.style.outline = "";
+          }, 1800);
+        });
+
+        searchResults.appendChild(result);
+      });
+    });
+
+    document.addEventListener("click", event => {
+      if (!searchBox.contains(event.target) && event.target !== searchBtn) {
+        searchBox.classList.remove("open");
+      }
+    });
+
+    /* ---------- Character filters ---------- */
+    $$(".filter").forEach(button => {
+      button.addEventListener("click", () => {
+        $$(".filter").forEach(btn => btn.classList.remove("active"));
+        button.classList.add("active");
+
+        const filter = button.dataset.filter;
+
+        $$("#characterGrid .card").forEach(card => {
+          const visible = filter === "all" || card.dataset.category === filter;
+          card.classList.toggle("hidden", !visible);
+        });
+      });
+    });
+
+    /* ---------- Modal ---------- */
+    const modal = $("#modal");
+    const modalTitle = $("#modalTitle");
+    const modalText = $("#modalText");
+    const closeModal = $("#closeModal");
+
+    function openModal(title, text) {
+      modalTitle.textContent = title;
+      modalText.textContent = text;
+      modal.classList.add("open");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeModalWindow() {
+      modal.classList.remove("open");
+      document.body.style.overflow = "";
+    }
+
+    $$(".details").forEach(button => {
+      button.addEventListener("click", () => {
+        openModal(button.dataset.title, button.dataset.text);
+      });
+    });
+
+    closeModal.addEventListener("click", closeModalWindow);
+
+    modal.addEventListener("click", event => {
+      if (event.target === modal) {
+        closeModalWindow();
+      }
+    });
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape") {
+        closeModalWindow();
+      }
+    });
+
+    /* ---------- Settings generator ---------- */
+    $("#generateSettings").addEventListener("click", () => {
+      const device = $("#device").value;
+      const style = $("#style").value;
+      const level = $("#level").value;
+
+      let settings;
+
+      if (style === "Rush") {
+        settings = {
+          general: 96,
+          redDot: 93,
+          scope2: 88,
+          scope4: 80,
+          sniper: 55,
+          freeLook: 90,
+          fire: 48
+        };
+      } else if (style === "Sniper") {
+        settings = {
+          general: 82,
+          redDot: 76,
+          scope2: 72,
+          scope4: 68,
+          sniper: 48,
+          freeLook: 75,
+          fire: 42
+        };
+      } else {
+        settings = {
+          general: 90,
+          redDot: 85,
+          scope2: 80,
+          scope4: 74,
+          sniper: 52,
+          freeLook: 82,
+          fire: 45
+        };
+      }
+
+      if (device === "iPhone") {
+        settings.general = Math.min(100, settings.general + 2);
+      }
+
+      if (device === "PC") {
+        settings.general = Math.max(1, settings.general - 8);
+        settings.fire = 40;
+      }
+
+      if (level === "Новичок") {
+        settings.general = Math.max(1, settings.general - 5);
+      }
+
+      if (level === "Профессионал") {
+        settings.general = Math.min(100, settings.general + 3);
+      }
+
+      const result = $("#settingsResult");
+
+      result.innerHTML = `
+        <h3>⚡ Рекомендуемый пресет</h3>
+        <p style="color:var(--muted);margin-bottom:18px">
+          ${device} • ${style} • ${level}
+        </p>
+
+        ${createSetting("General", settings.general)}
+        ${createSetting("Red Dot", settings.redDot)}
+        ${createSetting("2x Scope", settings.scope2)}
+        ${createSetting("4x Scope", settings.scope4)}
+        ${createSetting("Sniper Scope", settings.sniper)}
+        ${createSetting("Free Look", settings.freeLook)}
+        ${createSetting("Размер кнопки стрельбы", settings.fire)}
+
+        <p style="margin-top:18px;color:#777;font-size:.75rem">
+          Это стартовая рекомендация, а не гарантированный способ попаданий.
+          Подстрой значения под свой экран, FPS и привычки.
+        </p>
+      `;
+
+      showToast("Настройки созданы");
+    });
+
+    function createSetting(name, value) {
+      return `
+        <div class="bar">
+          <div class="bar-top">
+            <span>${name}</span>
+            <b>${value}</b>
+          </div>
+          <div class="bar-line">
+            <i style="width:${Math.min(100, value)}%"></i>
+          </div>
+        </div>
+      `;
+    }
+
+    /* ---------- Map ---------- */
+    $$(".marker").forEach(marker => {
+      marker.addEventListener("click", () => {
+        $("#mapInfo").innerHTML = `
+          <h3>📍 ${marker.dataset.name}</h3>
+          <p style="color:#aaa">${marker.dataset.info}</p>
+        `;
+
+        showToast(marker.dataset.name);
+      });
+    });
+
+    /* ---------- FAQ ---------- */
+    $$(".faq-question").forEach(question => {
+      question.addEventListener("click", () => {
+        const item = question.parentElement;
+
+        $$(".faq-item").forEach(other => {
+          if (other !== item) {
+            other.classList.remove("open");
+            $(".faq-question span", other).textContent = "+";
+          }
+        });
+
+        item.classList.toggle("open");
+        $(".faq-question span", item).textContent =
+          item.classList.contains("open") ? "−" : "+";
+      });
+    });
+
+    /* ---------- Contact form ---------- */
+    $("#contactForm").addEventListener("submit", event => {
+      event.preventDefault();
+
+      const name = $("#name").value.trim();
+      const email = $("#email").value.trim();
+      const message = $("#message").value.trim();
+
+      if (name.length < 2 || message.length < 10 || !email.includes("@")) {
+        showToast("Проверьте заполнение формы");
+        return;
+      }
+
+      $("#success").style.display = "block";
+      event.target.reset();
+
+      showToast("Сообщение отправлено");
+    });
+
+    /* ---------- Scroll progress ---------- */
+    function updateScroll() {
+      const scrollTop = window.scrollY;
+      const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = documentHeight > 0 ? (scrollTop / documentHeight) * 100 : 0;
+
+      $("#progress").style.width = `${progress}%`;
+
+      $("#topBtn").classList.toggle("show", scrollTop > 600);
+    }
+
+    window.addEventListener("scroll", updateScroll, { passive: true });
+    updateScroll();
+
+    /* ---------- Back to top ---------- */
+    $("#topBtn").addEventListener("click", () => {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    });
+
+    /* ---------- Reveal animations ---------- */
+    const revealObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: .12 });
+
+    $$(".reveal").forEach(element => revealObserver.observe(element));
+
+    /* ---------- Counters ---------- */
+    const counterObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+
+        const element = entry.target;
+        const target = Number(element.dataset.counter);
+        let current = 0;
+        const duration = 1200;
+        const start = performance.now();
+
+        function animate(time) {
+          const progress = Math.min((time - start) / duration, 1);
+          current = Math.floor(progress * target);
+          element.textContent = current + (target === 100 ? "M+" : "+");
+
+          if (progress < 1) {
+            requestAnimationFrame(animate);
+          }
+        }
+
+        requestAnimationFrame(animate);
+        counterObserver.unobserve(element);
+      });
+    }, { threshold: .7 });
+
+    $$("[data-counter]").forEach(counter => counterObserver.observe(counter));
+
+    /* ---------- Active navigation ---------- */
+    const sections = $$("main section[id]");
+    const navAnchors = $$("#navLinks a");
+
+    const sectionObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+
+        navAnchors.forEach(anchor => {
+          anchor.classList.toggle(
+            "active",
+            anchor.getAttribute("href") === "#" + entry.target.id
+          );
+        });
+      });
+    }, {
+      rootMargin: "-35% 0px -55% 0px"
+    });
+
+    sections.forEach(section => sectionObserver.observe(section));
+
+    /* ---------- Smooth buttons ---------- */
+    $$("a[href^='#']").forEach(link => {
+      link.addEventListener("click", event => {
+        const id = link.getAttribute("href");
+
+        if (id.length > 1 && $(id)) {
+          event.preventDefault();
+
+          $(id).scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+          });
+        }
+      });
+    });
+
+    /* ---------- Image fallback ---------- */
+    $$("img").forEach(img => {
+      img.addEventListener("error", () => {
+        img.style.display = "none";
+        img.parentElement.style.background =
+          "linear-gradient(135deg, #28151a, #17171c 55%, #3a1910)";
+      });
+    });
+  </script>
+</body>
+</html>
